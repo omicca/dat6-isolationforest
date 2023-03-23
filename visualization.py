@@ -1,13 +1,10 @@
+import pandas as pd
 import seaborn as sns
 
 
 def visualize_data():
     sns.set_theme()
-    tips = sns.load_dataset("tips")
-
-    sns.relplot(
-        data=tips,
-        x="total_bill", y="tip", col="time",
-        hue="smoker", style="smoker", size="size"
-    )
-
+    data = pd.read_csv("csv-data/file.csv")
+    #print(data.head(), data.info())
+    average = (data['28'].mean())
+    print(average)
