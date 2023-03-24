@@ -5,12 +5,8 @@ import seaborn as sns
 import numpy as np
 from sklearn.ensemble import IsolationForest
 import visualization as vs
+import analytics as an
 
-# convert to csv
-with open('data/Credit Card Fraud Detection_train.pkl', "rb") as file:
-    data = pk.load(file)
-dataframe = pd.DataFrame(data)
-dataframe.to_csv(r'csv-data/file.csv')
-dataframe = pd.read_csv('csv-data/file.csv')
+x = input("1. test\n2. testlabel\n3. train\nSelection: ")
 
-vs.visualize_data()
+an.dataset_analytics()
