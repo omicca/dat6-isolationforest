@@ -32,6 +32,7 @@ while (True):
     elif (select == "2"):
         try:
             an.dataset_analytics(df)
+            an.isoforest(df)
         except NameError:
             print("ERROR: Convert .pkl file before accessing dataframe\n")
 
