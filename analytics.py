@@ -7,13 +7,22 @@ from sklearn.ensemble import IsolationForest
 #data = pd.read_csv("csv-data/file.csv")
 
 def isoforest(dataframe):
-    feature_input = ['0', '1']
-    isomodel = IsolationForest(contamination=float(0.1), random_state=42)
+    feature_input = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+    isomodel = IsolationForest(contamination=float(0.00126), random_state=42)
     isomodel.fit(dataframe[feature_input])
 
     dataframe['score'] = isomodel.decision_function(dataframe[feature_input])
     dataframe['prediction'] = isomodel.predict(dataframe[feature_input])
+
     print(dataframe.loc[:, ['0', '1', 'score', 'prediction']])
+    dataframe.to_csv(r'csv-data/result.csv')
+    dataframe = pd.read_csv('csv-data/result.csv')
+
+    count_ones = (dataframe['prediction'] == 1).sum()
+    count_ones_neg = (dataframe['prediction'] == -1).sum()
+    print(f"Predictions\nFraud: {count_ones_neg} \nNon-fraud: {count_ones}")
+
+    return dataframe
 
 def dataset_analytics(dataframe):
     # average transaction
