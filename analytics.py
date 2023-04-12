@@ -3,26 +3,31 @@ import pickle as pk
 import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.ensemble import IsolationForest
+from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import precision_score, make_scorer
 
 #data = pd.read_csv("csv-data/file.csv")
 
-def isoforest(dataframe):
-    feature_input = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17']
-    isomodel = IsolationForest(contamination=float(0.1), random_state=42) #0.00126
-    isomodel.fit(dataframe[feature_input])
+def isoforest(train, test):
 
-    dataframe['score'] = isomodel.decision_function(dataframe[feature_input])
-    dataframe['prediction'] = isomodel.predict(dataframe[feature_input])
+    isomodel = IsolationForest(n_estimators=200, contamination=0.00159, random_state=42)  # 0.00159
 
-    print(dataframe.loc[:, ['0', '1', 'score', 'prediction']])
-    dataframe.to_csv(r'csv-data/result.csv')
-    dataframe = pd.read_csv('csv-data/result.csv')
+    feature_input = ['1', '2', '3', '9', '13']
+    isomodel.fit(train[feature_input])
 
-    count_ones = (dataframe['prediction'] == 1).sum()
-    count_ones_neg = (dataframe['prediction'] == -1).sum()
+    test['score'] = isomodel.decision_function(test[feature_input])
+    test['prediction'] = isomodel.predict(test[feature_input])
+
+    print(test.loc[:, ['0', '1', 'score', 'prediction']])
+    test.to_csv(r'csv-data/result.csv')
+    test = pd.read_csv('csv-data/result.csv')
+
+    count_ones = (test['prediction'] == 1).sum()
+    count_ones_neg = (test['prediction'] == -1).sum()
     print(f"Predictions\nFraud: {count_ones_neg} \nNon-fraud: {count_ones}")
 
-    return dataframe
+    return test
 
 def dataset_analytics(dataframe):
     # average transaction
@@ -31,9 +36,6 @@ def dataset_analytics(dataframe):
 
     median = (dataframe['28'].median())
     print("Middle value: " + str(median))
-
-
-
 
     # contains null
     if (dataframe.isnull == True):
