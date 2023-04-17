@@ -30,14 +30,14 @@ while (True):
 
     elif (select == "2"):
         try:
-            #an.isoforest(df_train, df_test)
-            an.dataset_analytics(df_train)
+            an.isoforest(df_train, df_test)
+            #an.dataset_analytics(df_train)
         except NameError:
             print("ERROR: Convert .pkl file before accessing dataframe\n")
 
     elif (select == "3"):
-        df_test = df_test.reset_index(drop=True)
-        vs.visualize_data(df_test)
+        #df_test = df_test.reset_index(drop=True)
+        vs.corr_matrix()
 
     elif (select == "4"):
         an.transform_to_test()

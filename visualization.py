@@ -22,3 +22,9 @@ def variance_plot(variances):
     plt.xticks(rotation=90)
     plt.title("Feature Variances")
     plt.show()
+
+def corr_matrix():
+    dataset = pd.read_csv('csv-data/finaltestlabel.csv')
+    correlation_m = dataset.corr()
+    sns.heatmap(correlation_m, cmap='coolwarm_r')
+    plt.show()
