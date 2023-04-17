@@ -16,3 +16,9 @@ def visualize_data(dataframe):
   #  non_fraud_df = dataframe[dataframe["class"] == 0]
 
     print(dataframe[dataframe.index.duplicated()])
+
+def variance_plot(variances):
+    sns.barplot(x=variances.index, y=variances.values)
+    plt.xticks(rotation=90)
+    plt.title("Feature Variances")
+    plt.show()

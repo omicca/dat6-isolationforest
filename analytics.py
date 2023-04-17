@@ -1,6 +1,6 @@
 import pandas as pd
 import pickle as pk
-import seaborn as sns
+import visualization as vs
 import matplotlib.pyplot as plt
 from sklearn.ensemble import IsolationForest
 from sklearn.model_selection import GridSearchCV
@@ -11,9 +11,11 @@ from sklearn.metrics import precision_score, make_scorer
 
 def isoforest(train, test):
 
-    isomodel = IsolationForest(n_estimators=200, contamination=0.00159, random_state=42)  # 0.00159
+    isomodel = IsolationForest(n_estimators=100, max_samples=5000, contamination='auto', max_features=1.0, random_state=42)  # 0.00159
 
-    feature_input = ['1', '2', '3', '9', '13']
+    feature_input = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
+                     '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
+                     '21', '22', '23', '24', '25', '26', '27']
     isomodel.fit(train[feature_input])
 
     test['score'] = isomodel.decision_function(test[feature_input])
@@ -27,6 +29,10 @@ def isoforest(train, test):
     count_ones_neg = (test['prediction'] == -1).sum()
     print(f"Predictions\nFraud: {count_ones_neg} \nNon-fraud: {count_ones}")
 
+    test.drop(test.columns[0:31], axis=1, inplace=True)
+
+    transform_to_test(test)
+ 
     return test
 
 def dataset_analytics(dataframe):
@@ -43,6 +49,12 @@ def dataset_analytics(dataframe):
     else:
         print("Null values: False\n")
 
+    max_values = dataframe.max()
+    print(max_values)
+    min_values = dataframe.min()
+    print(min_values)
+
+
 def pkl_to_csv(datafile):
     # convert to csv
     with open('data/Credit Card Fraud Detection_' + datafile + '.pkl', "rb") as file:
@@ -53,14 +65,12 @@ def pkl_to_csv(datafile):
 
     return dataframe
 
-def transform_to_test(df1, df2):
+def transform_to_test():
     df1 = pd.read_csv('csv-data/testfile.csv')
     df2 = pd.read_csv('csv-data/testlabelfile.csv')
-    column_to_add = df2['0']
 
-    new_df = pd.concat([df1, column_to_add], axis=1)
-    rename_index = new_df.columns.get_loc('0', 1)
-    new_df = new_df.rename(columns={new_df.columns[rename_index]: 'Class'})
-    new_df.to_csv('testlabel.csv', index=False)
+    new_df = pd.merge(df1, df2[['Unnamed: 0', '0']], on='Unnamed: 0', how='left')
+    new_df.to_csv(r'testing.csv')
 
-    return new_df
+
+

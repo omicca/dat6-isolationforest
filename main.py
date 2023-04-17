@@ -30,7 +30,8 @@ while (True):
 
     elif (select == "2"):
         try:
-            an.isoforest(df_train, df_test)
+            #an.isoforest(df_train, df_test)
+            an.dataset_analytics(df_train)
         except NameError:
             print("ERROR: Convert .pkl file before accessing dataframe\n")
 
@@ -39,7 +40,7 @@ while (True):
         vs.visualize_data(df_test)
 
     elif (select == "4"):
-        df_test = an.transform_to_test(df_label, df_test)
+        an.transform_to_test()
 
     else:
         print("Invalid selection")
