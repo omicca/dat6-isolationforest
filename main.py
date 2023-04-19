@@ -1,24 +1,22 @@
-import pickle as pk
+import os
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-import numpy as np
 import visualization as vs
 import analytics as an
 
 select = input("1. Convert .pkl\n2. Dataset analytics\n3. Data visualization\n4. Merge test & labelled\nSelection: ")
+csvfolder = r'csv-data'
+if not os.path.exists(csvfolder):
+    os.makedirs(csvfolder)
 
 while (True):
     if (select == "1"):
-        x = input("1. test\n2. testlabel\n3. train\nSelection: ")
+        x = input("1. test and labelled\n2. train\nSelection: ")
         match x:
             case "1":
                 an.pkl_to_csv("test")
-
-            case "2":
                 an.pkl_to_csv("testlabel")
 
-            case "3":
+            case "2":
                 an.pkl_to_csv("train")
 
             case other:
