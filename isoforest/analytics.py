@@ -1,11 +1,7 @@
 import pandas as pd
 import pickle as pk
-import visualization as vs
-import matplotlib.pyplot as plt
 from sklearn.ensemble import IsolationForest
-from sklearn.model_selection import GridSearchCV
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import precision_score, make_scorer
+
 
 #data = pd.read_csv("csv-data/file.csv")
 
@@ -69,8 +65,8 @@ def pkl_to_csv(datafile):
     return dataframe
 
 def transform_to_test():
-    df1 = pd.read_csv('csv-data/testfile.csv')
-    df2 = pd.read_csv('csv-data/testlabelfile.csv')
+    df1 = pd.read_csv('../csv-data/testfile.csv')
+    df2 = pd.read_csv('../csv-data/testlabelfile.csv')
 
     new_df = pd.merge(df1, df2[['Unnamed: 0', '0']], on='Unnamed: 0', how='left')
     new_df = new_df.drop(['Unnamed: 0'], axis=1)
