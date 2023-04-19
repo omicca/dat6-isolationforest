@@ -13,30 +13,30 @@ while (True):
         x = input("1. test\n2. testlabel\n3. train\nSelection: ")
         match x:
             case "1":
-                df_test = an.pkl_to_csv("test")
+                an.pkl_to_csv("test")
 
             case "2":
-                df_label = an.pkl_to_csv("testlabel")
+                an.pkl_to_csv("testlabel")
 
             case "3":
-                df_train = an.pkl_to_csv("train")
+                an.pkl_to_csv("train")
 
             case other:
                 print("Invalid selection")
-                exit()
 
 
         print(".pkl converted successfully.\n\n")
 
     elif (select == "2"):
         try:
-            an.isoforest(df_train, df_test)
+            train = pd.read_csv('csv-data/trainfile.csv')
+            test = pd.read_csv('csv-data/testfile.csv')
+            an.isoforest(train, test)
             #an.dataset_analytics(df_train)
-        except NameError:
-            print("ERROR: Convert .pkl file before accessing dataframe\n")
+        except FileNotFoundError:
+            print("ERROR: Convert .pkl before running analytics\n")
 
     elif (select == "3"):
-        #df_test = df_test.reset_index(drop=True)
         vs.corr_matrix()
 
     elif (select == "4"):
