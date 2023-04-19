@@ -39,6 +39,7 @@ def run():
 
         elif (select == "4"):
             an.transform_to_test()
+            print("Merge successful\n")
 
         else:
             print("Invalid selection")

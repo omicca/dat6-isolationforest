@@ -19,19 +19,35 @@ def isoforest(train, test):
 
     test['score'] = isomodel.decision_function(test[feature_input])
     test['prediction'] = isomodel.predict(test[feature_input])
+    results = test.drop(['Unnamed: 0'], axis=1)
 
-    print(test.loc[:, ['0', '1', 'score', 'prediction']])
-    test.to_csv(r'csv-data/result.csv')
+    results.to_csv(r'csv-data/result.csv')
     test = pd.read_csv('csv-data/result.csv')
 
     count_ones = (test['prediction'] == 1).sum()
     count_ones_neg = (test['prediction'] == -1).sum()
-    print(f"Predictions\nFraud: {count_ones_neg} \nNon-fraud: {count_ones}")
+    print(f"Predictions\nFraud: {count_ones_neg} \nNon-fraud: {count_ones}\n")
 
- 
-    return test
+    try:
+        testlabel = pd.read_csv('csv-data/finaltestlabel.csv')
+    except FileNotFoundError:
+        print("Failed to perform further tests: missing merged test label file\n")
 
-#def matrices()
+
+    merged_df = pd.merge(test[test['prediction'] == -1], testlabel[testlabel['Class'] == 1.0], how='inner', left_index=True, right_index=True)
+    tp = len(merged_df.index)
+    merged_df = pd.merge(test[test['prediction'] == -1], testlabel[testlabel['Class'] == 0.0], how='inner', left_index=True, right_index=True)
+    fp = len(merged_df.index)
+    merged_df = pd.merge(test[test['prediction'] == 1], testlabel[testlabel['Class'] == 1.0], how='inner', left_index=True, right_index=True)
+    fn = len(merged_df.index)
+    merged_df = pd.merge(test[test['prediction'] == 1], testlabel[testlabel['Class'] == 0.0], how='inner', left_index=True, right_index=True)
+    tn = len(merged_df.index)
+
+    print(tp, fp, fn, tn)
+
+
+#def matrices():
+
 
 
 def dataset_analytics(dataframe):
@@ -58,6 +74,7 @@ def pkl_to_csv(datafile):
     # convert to csv
     with open('data/Credit Card Fraud Detection_' + datafile + '.pkl', "rb") as file:
         data = pk.load(file)
+
     dataframe = pd.DataFrame(data)
     dataframe.to_csv(r'csv-data/' + datafile + 'file.csv')
     dataframe = pd.read_csv('csv-data/' + datafile + 'file.csv')
@@ -65,14 +82,15 @@ def pkl_to_csv(datafile):
     return dataframe
 
 def transform_to_test():
-    df1 = pd.read_csv('../csv-data/testfile.csv')
-    df2 = pd.read_csv('../csv-data/testlabelfile.csv')
+    df1 = pd.read_csv('csv-data/testfile.csv')
+    df2 = pd.read_csv('csv-data/testlabelfile.csv')
+    df2 = df2.drop(df2.index[0])
 
     new_df = pd.merge(df1, df2[['Unnamed: 0', '0']], on='Unnamed: 0', how='left')
     new_df = new_df.drop(['Unnamed: 0'], axis=1)
     new_df = new_df.rename(columns={'0_x': '0', '0_y': 'Class'})
 
-    new_df.to_csv(r'csv-data/finaltestlabel.csv', index=False)
+    new_df.to_csv(r'csv-data/finaltestlabel.csv', index=True)
 
 
 
