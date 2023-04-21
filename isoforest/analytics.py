@@ -1,7 +1,7 @@
 import pandas as pd
 import pickle as pk
 from sklearn.ensemble import IsolationForest
-
+from . import visualization as vs
 
 #data = pd.read_csv("csv-data/file.csv")
 
@@ -33,21 +33,45 @@ def isoforest(train, test):
     except FileNotFoundError:
         print("Failed to perform further tests: missing merged test label file\n")
 
+    y_true = testlabel['Class']
+    y_pred = test['prediction']
 
-    merged_df = pd.merge(test[test['prediction'] == -1], testlabel[testlabel['Class'] == 1.0], how='inner', left_index=True, right_index=True)
-    tp = len(merged_df.index)
-    merged_df = pd.merge(test[test['prediction'] == -1], testlabel[testlabel['Class'] == 0.0], how='inner', left_index=True, right_index=True)
-    fp = len(merged_df.index)
-    merged_df = pd.merge(test[test['prediction'] == 1], testlabel[testlabel['Class'] == 1.0], how='inner', left_index=True, right_index=True)
-    fn = len(merged_df.index)
-    merged_df = pd.merge(test[test['prediction'] == 1], testlabel[testlabel['Class'] == 0.0], how='inner', left_index=True, right_index=True)
-    tn = len(merged_df.index)
-
-    print(tp, fp, fn, tn)
-
+    vs.confusion_matrix(y_true, y_pred)
 
 #def matrices():
 
+
+
+def metrics(test, testlabel):
+    def merge_dataframes(prediction_val, class_val):
+        return pd.merge(test[test['prediction'] == prediction_val], testlabel[testlabel['Class'] == class_val],
+                        how='inner', left_index=True, right_index=True)
+
+    # True positives
+    merged_df = merge_dataframes(-1, 1.0)
+    tp = len(merged_df.index)
+
+    # False positives
+    merged_df = merge_dataframes(-1, 0.0)
+    fp = len(merged_df.index)
+
+    # False negatives
+    merged_df = merge_dataframes(1, 1.0)
+    fn = len(merged_df.index)
+
+    # True negatives
+    merged_df = merge_dataframes(1, 0.0)
+    tn = len(merged_df.index)
+
+    accuracy = ((tp+tn)/(tp+tn+fp+fn))
+
+    precision = (tp / (tp + fp))
+
+    recall = (tp / (tp + fn))
+
+    f1 = 2 * ((precision*recall)/(precision+recall))
+
+    return accuracy, precision, recall, f1
 
 
 def dataset_analytics(dataframe):

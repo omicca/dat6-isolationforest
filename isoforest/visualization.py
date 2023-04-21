@@ -1,6 +1,7 @@
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix
 
 #data = pd.read_csv("csv-data/trainfile.csv")
 
@@ -27,4 +28,9 @@ def corr_matrix():
     dataset = pd.read_csv('csv-data/finaltestlabel.csv')
     correlation_m = dataset.corr()
     sns.heatmap(correlation_m, cmap='coolwarm_r')
+    plt.show()
+
+def confusion_matrix(ytrue, ypred):
+
+
     plt.show()
