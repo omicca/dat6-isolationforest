@@ -36,6 +36,7 @@ def isoforest(train, test):
 
     accuracy, precision, recall, f1, cfmatrix = metrics(test, testlabel)
     vs.confusion_matrix(cfmatrix, accuracy, precision, recall, f1)
+    vs.boxplot()
 
 
 

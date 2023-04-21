@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+from . import analytics as an
 from sklearn.metrics import confusion_matrix
 
 #data = pd.read_csv("csv-data/trainfile.csv")
@@ -42,6 +43,16 @@ def confusion_matrix(matrixinput, acc, pre, rec, f1):
     plt.text(2.05, 0.09, f'P: %.10s' % pre, fontsize=10)
     plt.text(2.05, 0.17, f'R: %.10s' % rec, fontsize=10)
     plt.text(2.05, 0.25, f'F1: %.10s' % f1, fontsize=10)
+
+    plt.show()
+
+def boxplot():
+    sns.set_style("whitegrid")
+
+    df = pd.read_csv('csv-data/trainfile.csv')
+    print(df['1'].min())
+
+    sns.boxplot(x=df['1'])
 
     plt.show()
 
