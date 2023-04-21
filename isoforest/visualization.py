@@ -30,7 +30,8 @@ def corr_matrix():
     sns.heatmap(correlation_m, cmap='coolwarm_r')
     plt.show()
 
-def confusion_matrix(ytrue, ypred):
-
-
+def confusion_matrix(matrixinput):
+    sns.heatmap(matrixinput, annot=True, cmap='Blues', fmt='g')
     plt.show()
+
+

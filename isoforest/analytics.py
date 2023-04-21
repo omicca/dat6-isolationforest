@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import pickle as pk
 from sklearn.ensemble import IsolationForest
 from . import visualization as vs
@@ -33,10 +34,9 @@ def isoforest(train, test):
     except FileNotFoundError:
         print("Failed to perform further tests: missing merged test label file\n")
 
-    y_true = testlabel['Class']
-    y_pred = test['prediction']
+    accuracy, precision, recall, f1, cfmatrix = metrics(test, testlabel)
+    vs.confusion_matrix(cfmatrix)
 
-    vs.confusion_matrix(y_true, y_pred)
 
 #def matrices():
 
@@ -63,6 +63,9 @@ def metrics(test, testlabel):
     merged_df = merge_dataframes(1, 0.0)
     tn = len(merged_df.index)
 
+    cf_matrix = np.array([[tp, fp],
+                         [fn, tn]])
+
     accuracy = ((tp+tn)/(tp+tn+fp+fn))
 
     precision = (tp / (tp + fp))
@@ -71,7 +74,7 @@ def metrics(test, testlabel):
 
     f1 = 2 * ((precision*recall)/(precision+recall))
 
-    return accuracy, precision, recall, f1
+    return accuracy, precision, recall, f1, cf_matrix
 
 
 def dataset_analytics(dataframe):
