@@ -35,7 +35,7 @@ def isoforest(train, test):
         print("Failed to perform further tests: missing merged test label file\n")
 
     accuracy, precision, recall, f1, cfmatrix = metrics(test, testlabel)
-    vs.confusion_matrix(cfmatrix)
+    vs.confusion_matrix(cfmatrix, accuracy, precision, recall, f1)
 
 
 #def matrices():
@@ -63,8 +63,8 @@ def metrics(test, testlabel):
     merged_df = merge_dataframes(1, 0.0)
     tn = len(merged_df.index)
 
-    cf_matrix = np.array([[tp, fp],
-                         [fn, tn]])
+    cf_matrix = np.array([[fn, fn],
+                         [fp, tp]])
 
     accuracy = ((tp+tn)/(tp+tn+fp+fn))
 
