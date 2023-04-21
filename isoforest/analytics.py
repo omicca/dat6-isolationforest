@@ -38,6 +38,7 @@ def isoforest(train, test):
     vs.confusion_matrix(cfmatrix, accuracy, precision, recall, f1)
 
 
+
 #def matrices():
 
 
@@ -63,8 +64,8 @@ def metrics(test, testlabel):
     merged_df = merge_dataframes(1, 0.0)
     tn = len(merged_df.index)
 
-    cf_matrix = np.array([[fn, fn],
-                         [fp, tp]])
+    cf_matrix = np.array([[tn, fp],
+                         [fn, tp]])
 
     accuracy = ((tp+tn)/(tp+tn+fp+fn))
 
@@ -73,6 +74,8 @@ def metrics(test, testlabel):
     recall = (tp / (tp + fn))
 
     f1 = 2 * ((precision*recall)/(precision+recall))
+
+    print(accuracy, precision, recall, f1)
 
     return accuracy, precision, recall, f1, cf_matrix
 

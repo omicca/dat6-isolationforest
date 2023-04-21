@@ -32,13 +32,16 @@ def corr_matrix():
     plt.show()
 
 def confusion_matrix(matrixinput, acc, pre, rec, f1):
-    ax = sns.heatmap(matrixinput, annot=True, cmap='gray_r', square=True, vmin=0, vmax=0, linewidths=0.5, linecolor='k'
+    ax = sns.heatmap(matrixinput, annot=True, cmap='Blues', square=True, vmin=0, vmax=0, linewidths=0.5, linecolor='k'
                                 , fmt="g", cbar=False)
     sns.despine(left=False, right=False, top=False, bottom=False)
     plt.xlabel('Predicted')
     plt.ylabel('Actual')
 
-    plt.annotate(f'Accuracy = ?', xy=(-0.5, 0.5), ha='right', fontsize=12)
+    #plt.text(2.05, 0.01, f'A: %.10s' % acc, fontsize=12)
+    plt.text(2.05, 0.09, f'P: %.10s' % pre, fontsize=10)
+    plt.text(2.05, 0.17, f'R: %.10s' % rec, fontsize=10)
+    plt.text(2.05, 0.25, f'F1: %.10s' % f1, fontsize=10)
 
     plt.show()
 
