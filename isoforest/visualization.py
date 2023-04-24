@@ -47,12 +47,8 @@ def confusion_matrix(matrixinput, acc, pre, rec, f1):
     plt.show()
 
 def boxplot():
-    sns.set_style("whitegrid")
-
     df = pd.read_csv('csv-data/trainfile.csv')
-    print(df['1'].min())
-
-    sns.boxplot(x=df['1'])
+    plt.boxplot(df['4'])
 
     plt.show()
 
