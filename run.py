@@ -35,7 +35,8 @@ def run():
                 print("ERROR: Convert .pkl before running analytics\n")
 
         elif (select == "3"):
-            vs.corr_matrix()
+            #vs.corr_matrix()
+            vs.splot()
 
         elif (select == "4"):
             an.transform_to_test()

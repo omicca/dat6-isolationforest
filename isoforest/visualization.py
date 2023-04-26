@@ -1,9 +1,11 @@
 import numpy as np
 import pandas as pd
 import seaborn as sns
+import matplotlib
 import matplotlib.pyplot as plt
 from . import analytics as an
 from sklearn.metrics import confusion_matrix
+import itertools
 
 #data = pd.read_csv("csv-data/trainfile.csv")
 
@@ -48,8 +50,24 @@ def confusion_matrix(matrixinput, acc, pre, rec, f1):
 
 def boxplot():
     df = pd.read_csv('csv-data/trainfile.csv')
-    plt.boxplot(df['4'])
+    sns.boxplot(df['8'])
 
     plt.show()
+
+def splot():
+    scatter = pd.read_csv('csv-data/finaltestlabel.csv')
+    scatter = scatter.drop('Unnamed: 0', axis=1)
+    combinations = list(itertools.combinations(scatter.columns, 2))
+    #sns.relplot(data = scatter, x='15', y='17', hue='Class')
+
+    for features in combinations:
+        fig = sns.relplot(data=scatter, x=scatter[features[0]], y=scatter[features[1]], hue='Class')
+        plt.show()
+        #plt.savefig(f"images/{features[0]}_&_{features[1]}.png")
+        fig.savefig(f"images/{features[0]}_&_{features[1]}.png")
+        plt.close()
+
+
+
 
 

@@ -8,13 +8,17 @@ from . import visualization as vs
 
 def isoforest(train, test):
 
-    isomodel = IsolationForest(n_estimators=20, max_samples=500, contamination=float(0.1), max_features=1.0, random_state=42)  # 0.00159
+    isomodel = IsolationForest(n_estimators=20, max_samples=len(train), contamination=0.01,
+                               max_features=4, bootstrap=True, n_jobs=None,
+                               verbose=0, warm_start=False)  # 0.00159
 
-    feature_input = ['17', '10', '12', '16', '14', '3', '7', '11', '4']
+    feature_input = ['11', '13', '16', '17'] #'10',
 
     #['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
     # '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
-    # '21', '22', '23', '24', '25', '26', '27']
+   #  '21', '22', '23', '24', '25', '26', '27']
+
+
 
     isomodel.fit(train[feature_input])
 
@@ -36,9 +40,8 @@ def isoforest(train, test):
 
     accuracy, precision, recall, f1, cfmatrix = metrics(test, testlabel)
     vs.confusion_matrix(cfmatrix, accuracy, precision, recall, f1)
-    vs.boxplot()
-
-
+    #vs.boxplot()
+    #vs.splot()
 
 #def matrices():
 
