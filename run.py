@@ -15,7 +15,7 @@ def run():
             match x:
                 case "1":
                     an.pkl_to_csv("test")
-                    an.pkl_to_csv("testlabel")
+                    an.pkl_to_csv("label")
 
                 case "2":
                     an.pkl_to_csv("train")
@@ -27,8 +27,8 @@ def run():
 
         elif (select == "2"):
             try:
-                train = pd.read_csv('csv-data/trainfile.csv')
-                test = pd.read_csv('csv-data/testfile.csv')
+                train = pd.read_csv('csv-data/train.csv')
+                test = pd.read_csv('csv-data/test.csv')
                 an.isoforest(train, test)
                 # an.dataset_analytics(df_train)
             except FileNotFoundError:
@@ -36,7 +36,7 @@ def run():
 
         elif (select == "3"):
             #vs.corr_matrix()
-            vs.splot()
+            vs.boxplot()
 
         elif (select == "4"):
             an.transform_to_test()

@@ -49,10 +49,15 @@ def confusion_matrix(matrixinput, acc, pre, rec, f1):
     plt.show()
 
 def boxplot():
-    df = pd.read_csv('csv-data/trainfile.csv')
-    sns.boxplot(df['8'])
+    data = pd.read_csv('csv-data/test.csv')
+    data = data['18']
+    subsample = data.sample(n=100, random_state=42)
+
+    sns.boxplot(y=subsample)
+    sns.stripplot(y=subsample, color="black", size=4) #jitter
 
     plt.show()
+
 
 def splot():
     scatter = pd.read_csv('csv-data/finaltestlabel.csv')

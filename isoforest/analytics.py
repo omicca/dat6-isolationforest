@@ -108,14 +108,14 @@ def pkl_to_csv(datafile):
         data = pk.load(file)
 
     dataframe = pd.DataFrame(data)
-    dataframe.to_csv(r'csv-data/' + datafile + 'file.csv')
-    dataframe = pd.read_csv('csv-data/' + datafile + 'file.csv')
+    dataframe.to_csv(r'csv-data/' + datafile + '.csv')
+    dataframe = pd.read_csv('csv-data/' + datafile + '.csv')
 
     return dataframe
 
 def transform_to_test():
-    df1 = pd.read_csv('csv-data/testfile.csv')
-    df2 = pd.read_csv('csv-data/testlabelfile.csv')
+    df1 = pd.read_csv('csv-data/test.csv')
+    df2 = pd.read_csv('csv-data/label.csv')
     df2 = df2.drop(df2.index[0])
 
     new_df = pd.merge(df1, df2[['Unnamed: 0', '0']], on='Unnamed: 0', how='left')
