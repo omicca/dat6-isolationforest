@@ -8,11 +8,13 @@ from . import visualization as vs
 
 def isoforest(train, test):
 
-    isomodel = IsolationForest(n_estimators=20, max_samples=len(train), contamination=0.01,
-                               max_features=4, bootstrap=True, n_jobs=None,
-                               verbose=0, warm_start=False)  # 0.00159
+    isomodel = IsolationForest(n_estimators=20, max_samples='auto', contamination='auto',
+                               max_features=1, bootstrap=False, n_jobs=None,
+                               verbose=0, warm_start=False)  # 0.01
 
-    feature_input = ['11', '13', '16', '17'] #'10',
+    feature_input = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
+     '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
+     '21', '22', '23', '24', '25', '26', '27'] #'11', '13', '16', '17'
 
     #['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
     # '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
@@ -40,8 +42,10 @@ def isoforest(train, test):
 
     accuracy, precision, recall, f1, cfmatrix = metrics(test, testlabel)
     vs.confusion_matrix(cfmatrix, accuracy, precision, recall, f1)
-    #vs.boxplot()
-    #vs.splot()
+
+    print(f'P: {precision}\nR: {recall}\nF1: {f1}')
+
+
 
 #def matrices():
 
