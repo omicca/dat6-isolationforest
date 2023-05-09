@@ -3,6 +3,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib
 import matplotlib.pyplot as plt
+from matplotlib.cbook import boxplot_stats
 from . import analytics as an
 from sklearn.metrics import confusion_matrix
 import itertools
@@ -49,12 +50,9 @@ def confusion_matrix(matrixinput, acc, pre, rec, f1):
     plt.show()
 
 def boxplot():
-    data = pd.read_csv('csv-data/test.csv')
-    data = data['18']
-    subsample = data.sample(n=100, random_state=42)
-
-    sns.boxplot(y=subsample)
-    sns.stripplot(y=subsample, color="black", size=4) #jitter
+    data = pd.read_csv('csv-data/overall_normalized_score.csv')
+    sns.boxplot(data)
+    
 
     plt.show()
 

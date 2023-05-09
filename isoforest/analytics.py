@@ -8,17 +8,14 @@ from . import visualization as vs
 
 def isoforest(train, test):
 
-    isomodel = IsolationForest(n_estimators=20, max_samples='auto', contamination='auto',
-                               max_features=1, bootstrap=False, n_jobs=None,
-                               verbose=0, warm_start=False)  # 0.01
+    isomodel = IsolationForest(n_estimators=150, max_samples=len(train), contamination='auto',
+                               max_features=2, bootstrap=False, n_jobs=None,
+                               verbose=0, warm_start=False, random_state=42)  # 0.01
 
-    feature_input = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
-     '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
-     '21', '22', '23', '24', '25', '26', '27'] #'11', '13', '16', '17'
 
-    #['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
-    # '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
-   #  '21', '22', '23', '24', '25', '26', '27']
+    feature_input = ['9', '11', '13', '18'] #'11', '13', '16', '17'
+
+
 
 
 
@@ -128,5 +125,23 @@ def transform_to_test():
 
     new_df.to_csv(r'csv-data/finaltestlabel.csv', index=True)
 
+def normalize_data():
+    #zero-one normalization for boxplot
+    data = pd.read_csv('csv-data/test.csv')
 
+    # Iterate over each feature and apply normalization
+    for column in data.columns[0:28]:
+        # Check if the column is numeric
+        if data[column].dtype != 'object':
+            # Apply zero-one normalization
+            data[column] = (data[column] - data[column].min()) / (data[column].max() - data[column].min())
+
+    # Calculate the mean of the normalized values for each data point
+    data['overall_normalized_score'] = data.iloc[:, 0:28].mean(axis=1)
+
+    # Save the overall_normalized_score column to a new CSV file
+    data[['overall_normalized_score']].to_csv('overall_normalized_score.csv', index=False)
+
+    # Print the normalized dataset
+    print(data["0"])
 

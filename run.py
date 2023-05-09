@@ -42,6 +42,9 @@ def run():
             an.transform_to_test()
             print("Merge successful\n")
 
+        elif (select == "5"):
+            an.normalize_data()
+
         else:
             print("Invalid selection")
             exit()
