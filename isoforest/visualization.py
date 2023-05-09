@@ -51,8 +51,35 @@ def confusion_matrix(matrixinput, acc, pre, rec, f1):
 
 def boxplot():
     data = pd.read_csv('csv-data/overall_normalized_score.csv')
-    sns.boxplot(data)
-    
+    fig, ax = plt.subplots()
+
+    # Create a boxplot on the subplot
+    column_name = 'overall_normalized_score'
+    if column_name in data.columns:
+        boxplot = ax.boxplot(data[column_name])
+        outliers = [flier.get_ydata() for flier in boxplot["fliers"]][0]
+        outlier_positions = np.where(data[column_name].isin(outliers))[0]
+    else:
+        print(f"The column '{column_name}' is not present in the dataframe.")
+
+    labels = pd.read_csv('csv-data/label.csv')
+    is_outlier = labels["0"] == 1
+    outlier_indices = labels.index[is_outlier].tolist()
+
+    common_indices = set(outlier_positions).intersection(set(outlier_indices))
+
+    TP = len(common_indices)
+    FP = len(set(outlier_positions) - set(outlier_indices))
+    TN = len(data) - len(outliers) - FP
+    FN = len(outlier_indices) - TP
+
+    precision = TP / (TP + FP)
+    recall = TP / (TP + FN)
+    f1_score = 2 * precision * recall / (precision + recall)
+
+    print("Precision:", precision)
+    print("Recall:", recall)
+    print("F1-score:", f1_score)
 
     plt.show()
 

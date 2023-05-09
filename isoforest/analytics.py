@@ -140,8 +140,8 @@ def normalize_data():
     data['overall_normalized_score'] = data.iloc[:, 0:28].mean(axis=1)
 
     # Save the overall_normalized_score column to a new CSV file
-    data[['overall_normalized_score']].to_csv('overall_normalized_score.csv', index=False)
+    data[['overall_normalized_score']].to_csv('overall_normalized_score.csv', index=True)
 
     # Print the normalized dataset
-    print(data["0"])
+    print(data["overall_normalized_score"])
 
