@@ -1,14 +1,8 @@
 import numpy as np
 import pandas as pd
 import seaborn as sns
-import matplotlib
 import matplotlib.pyplot as plt
-from matplotlib.cbook import boxplot_stats
-from . import analytics as an
-from sklearn.metrics import confusion_matrix
 import itertools
-
-#data = pd.read_csv("csv-data/trainfile.csv")
 
 def visualize_data(dataframe):
     if dataframe is None:

@@ -4,8 +4,6 @@ import pickle as pk
 from sklearn.ensemble import IsolationForest
 from . import visualization as vs
 
-#data = pd.read_csv("csv-data/file.csv")
-
 def isoforest(train, test):
 
     isomodel = IsolationForest(n_estimators=150, max_samples=len(train), contamination='auto',
@@ -14,9 +12,6 @@ def isoforest(train, test):
 
 
     feature_input = ['9', '11', '13', '18'] #'11', '13', '16', '17'
-
-
-
 
 
     isomodel.fit(train[feature_input])
@@ -41,11 +36,6 @@ def isoforest(train, test):
     vs.confusion_matrix(cfmatrix, accuracy, precision, recall, f1)
 
     print(f'P: {precision}\nR: {recall}\nF1: {f1}')
-
-
-
-#def matrices():
-
 
 
 def metrics(test, testlabel):
